@@ -5,17 +5,28 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import CatFacts from "./CatFacts";
+import { motion } from "framer-motion";
+import { Paw } from "lucide-react";
 
 const CatBreed = ({ name, description, image }) => (
-  <Card className="mb-4 overflow-hidden">
-    <img src={image} alt={name} className="w-full h-48 object-cover" />
-    <CardHeader>
-      <CardTitle>{name}</CardTitle>
-    </CardHeader>
-    <CardContent>
-      <CardDescription>{description}</CardDescription>
-    </CardContent>
-  </Card>
+  <motion.div
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+  >
+    <Card className="mb-4 overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+      <img src={image} alt={name} className="w-full h-48 object-cover" />
+      <CardHeader>
+        <CardTitle className="flex items-center">
+          <Paw className="mr-2 h-5 w-5 text-purple-600" />
+          {name}
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <CardDescription>{description}</CardDescription>
+      </CardContent>
+    </Card>
+  </motion.div>
 );
 
 const Index = () => {
@@ -49,12 +60,19 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-100 to-pink-100 p-8">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-6xl font-bold mb-6 text-center text-purple-800">Feline Fascination</h1>
-        <div className="mb-12 relative">
+        <motion.h1
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-6xl font-bold mb-6 text-center text-purple-800"
+        >
+          Feline Fascination
+        </motion.h1>
+        <div className="mb-12 relative rounded-lg overflow-hidden shadow-2xl">
           <Slider {...settings}>
             {carouselImages.map((img, index) => (
               <div key={index}>
-                <img src={img} alt={`Cat ${index + 1}`} className="w-full h-[400px] object-cover rounded-lg" />
+                <img src={img} alt={`Cat ${index + 1}`} className="w-full h-[400px] object-cover" />
               </div>
             ))}
           </Slider>
@@ -62,19 +80,41 @@ const Index = () => {
             {currentSlide + 1} / {carouselImages.length}
           </div>
         </div>
-        <p className="text-xl text-gray-700 mb-12 text-center max-w-3xl mx-auto">
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+          className="text-xl text-gray-700 mb-12 text-center max-w-3xl mx-auto"
+        >
           Embark on a journey through the enchanting world of cats. These graceful creatures have captivated human hearts for millennia with their independence, agility, and affectionate nature. Discover the diverse tapestry of cat breeds, each weaving its own unique story of charm and character.
-        </p>
-        <div className="mb-12">
+        </motion.p>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7, duration: 0.5 }}
+          className="mb-12"
+        >
           <h2 className="text-3xl font-semibold mb-6 text-center text-purple-800">Fascinating Feline Facts</h2>
           <CatFacts />
-        </div>
-        <h2 className="text-3xl font-semibold mb-6 text-center text-purple-800">Explore Cat Breeds</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        </motion.div>
+        <motion.h2
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.9, duration: 0.5 }}
+          className="text-3xl font-semibold mb-6 text-center text-purple-800"
+        >
+          Explore Cat Breeds
+        </motion.h2>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.1, duration: 0.5 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {catBreeds.map((breed, index) => (
             <CatBreed key={index} name={breed.name} description={breed.description} image={breed.image} />
           ))}
-        </div>
+        </motion.div>
       </div>
     </div>
   );
